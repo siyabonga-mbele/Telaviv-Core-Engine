@@ -1,0 +1,10 @@
+```text
+# Ignore compiled binaries
+*.exe
+*.o
+*.out
+telaviv_engine
+
+# Ignore IDE files
+.vscode/
+.idea/
