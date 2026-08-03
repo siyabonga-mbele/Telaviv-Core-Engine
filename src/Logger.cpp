@@ -13,6 +13,6 @@ TradeAlert::Print() const {
     std::cout << "[TELEMETRY ALERT]: " << alertMessage << std::endl;
 }
 
-void SendToTelegram(TradeAlert alertCopy) {
+void SendToTelegram(const TradeAlert& alertCopy) { //added pass-by-reference
     alertCopy.Print();
 }
