@@ -6,8 +6,8 @@
 //}
 
 // FIXED Default Constructor: Initializes members to clean defaults
-MarketTick::MarketTick() : bidPrice = 0 , askPrice = 0, spread = 0; {
-    symbol[0] = 0; // Set symbol to empty string
+MarketTick::MarketTick() : bidPrice(0.0), askPrice(0.0), spread(0.0) {
+    symbol[0] = '\0'; // Set symbol to empty string
 }
 
 
