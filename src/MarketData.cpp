@@ -1,9 +1,15 @@
 #include "../include/MarketData.h"
 
 // Default Constructor (BROKEN: Uninitialized member variables!)
-MarketTick::MarketTick() {
+//MarketTick::MarketTick() {
     // Leaves symbol, bidPrice, askPrice, and spread with GARBAGE memory values!
+//}
+
+// FIXED Default Constructor: Initializes members to clean defaults
+MarketTick::MarketTick() : bidPrice = 0 , askPrice = 0, spread = 0; {
+    symbol[0] = 0; // Set symbol to empty string
 }
+
 
 // Parameterized Constructor
 MarketTick::MarketTick(const char* sym, double bid, double ask) {
