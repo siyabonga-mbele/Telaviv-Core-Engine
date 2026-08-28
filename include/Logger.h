@@ -22,4 +22,4 @@ public:
 };
 
 // Function signature causing pass-by-value shallow copy
-void SendToTelegram(TradeAlert alertCopy);
+void SendToTelegram(const TradeAlert& alertCopy);

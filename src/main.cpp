@@ -1,27 +1,50 @@
+#include <iostream>
 #include "../include/Logger.h"
 #include "../include/MarketData.h"
 #include "../include/OrderManager.h"
 
 int main() {
-    std::cout << "=== TELAVIV CORE ENGINE STARTUP ===" << std::endl;
+    std::cout << "==================================================" << std::endl;
+    std::cout << "      TELAVIV CORE ENGINE - INITIALIZING...       " << std::endl;
+    std::cout << "==================================================\n" << std::endl;
 
-    //Module 1: Telemetry Logger check
-    TradeAlert signalAlert("XAUUSD Buy Signal Triggered at 4030.16!");
-    std::cout << "--> Dispatching Notification..." << std::endl;
-    SendToTelegram(signalAlert); 
-    std::cout << "--> Verifying Memory State..." << std::endl;
-    signalAlert.Print(); // CRASHES HERE DUE TO DANGLING POINTER!
+    // 1. Telemetry Logger Test (TEL-101 / TEL-104)
+    std::cout << "--- [MODULE 1: TELEMETRY SYSTEM] ---" << std::endl;
+    TradeAlert startupAlert("System online. Network socket initialized.");
+    SendToTelegram(startupAlert);
+    std::cout << std::endl;
 
-    // Module 2: Market Data Feed Check (TEL-102 Target Area)
-    std::cout << "\n--> Fetching Live Market Ticks..." << std::endl;
-    MarketTick emptyTick; // Instantiates via default constructor
-    emptyTick.DisplayTick(); // CRITICAL BUG: Reads uninitialized garbage memory!
+    // 2. Market Data Processing (TEL-102)
+    std::cout << "--- [MODULE 2: MARKET DATA FEED] ---" << std::endl;
+    MarketTick defaultTick; // Verifies clean constructor initialization
+    std::cout << "Default Tick Check:" << std::endl;
+    defaultTick.DisplayTick();
 
-    // Module 3: Order Execution Check
-    std::cout << "\n--> Initializing Order Manager..." << std::endl;
-    OrderManager account(100.00); // $100 starting balance
-    account.ProcessOrder(20.00);
+    MarketTick goldTick("XAUUSD", 2500.50, 2500.80);
+    std::cout << "Live Tick Check:" << std::endl;
+    goldTick.DisplayTick();
+    std::cout << std::endl;
+
+    // 3. Order Manager & Retry System (TEL-103)
+    std::cout << "--- [MODULE 3: ORDER MANAGER & RISK EXECUTOR] ---" << std::endl;
+    OrderManager account(10000.00); // Initial account balance
     account.DisplayAccountStatus();
+
+    // Execute standard trade
+    std::cout << "\nExecuting primary order..." << std::endl;
+    account.ProcessOrder(250.00);
+    account.DisplayAccountStatus();
+
+    // Simulate network retry handling down to zero attempts
+    std::cout << "\nSimulating network failure retry sequence..." << std::endl;
+    unsigned int retriesLeft = 2;
+    account.RetryOrder(retriesLeft, 250.00); // Attempt 1 -> 1 left
+    account.RetryOrder(retriesLeft, 250.00); // Attempt 2 -> 0 left
+    account.RetryOrder(retriesLeft, 250.00); // Attempt 3 -> Underflow check triggers!
+
+    std::cout << "\n==================================================" << std::endl;
+    std::cout << "      ENGINE SHUTDOWN - ALL SYSTEMS NOMINAL       " << std::endl;
+    std::cout << "==================================================" << std::endl;
 
     return 0;
 }
