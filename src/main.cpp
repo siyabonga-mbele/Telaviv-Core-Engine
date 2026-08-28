@@ -29,6 +29,7 @@ int main() {
     std::cout << "--- [MODULE 3: ORDER MANAGER & RISK EXECUTOR] ---" << std::endl;
     OrderManager account(10000.00); // Initial account balance
     account.DisplayAccountStatus();
+    
 
     // Execute standard trade
     std::cout << "\nExecuting primary order..." << std::endl;
