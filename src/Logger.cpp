@@ -26,7 +26,9 @@ TradeAlert& TradeAlert::operator=(const TradeAlert& other) {
 }
 
 void TradeAlert::Print() const {
-    std::cout << "[TELEMETRY ALERT]: " << alertMessage << std::endl;
+    if (alertMessage) {
+        std::cout << "[TELEMETRY ALERT]: " << alertMessage << std::endl;
+    }
 }
 
 void SendToTelegram(const TradeAlert& alertCopy) { //added pass-by-reference
